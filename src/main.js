@@ -7,6 +7,7 @@ import Trend from 'vuetrend'
 import Chartkick from 'chartkick'
 import VueChartkick from 'vue-chartkick'
 import VueResource from 'vue-resource'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false
 
@@ -18,10 +19,15 @@ Vue.filter('currency', function (value) {
 Vue.use(Trend)
 Vue.use(VueChartkick, { Chartkick })
 Vue.use(VueResource)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyCRszFuoL7Wk2wZrbYuWPn2ESgIX_PCQ3s'
+  }
+})
 
 Vue.http.options.emulateHTTP = true
 Vue.http.options.crossOrigin = true
-Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
 Vue.component('alert', {
   props: ['type', 'bold', 'msg'],

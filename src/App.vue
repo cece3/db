@@ -15,7 +15,22 @@
   <alert bold="Vertical Chart: " msg="Example of another chart type.  Static data for now." type="alert-info"></alert>
   <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
   <alert bold="HTTP Get: " msg="Example of getting data via http on page load (mounted) and dynamically replacing data" type="alert-info"></alert>
-  <span>{{ legislators }}</span>
+  <span>{{ incidents }}</span>
+  <alert bold="Google maps: " msg="Example google maps (hardcoded data)" type="alert-info"></alert>
+  <gmap-map
+    :center="center"
+    :zoom="10"
+    style="width: 500px; height: 300px"
+  >
+    <gmap-marker
+      :key="index"
+      v-for="(m, index) in markers"
+      :position="m.position"
+      :clickable="true"
+      :draggable="true"
+      @click="center=m.position"
+    ></gmap-marker>
+  </gmap-map>
   </div>
 </template>
 
@@ -32,11 +47,11 @@ export default {
     OrderForm
   },
   mounted: function () {
-    this.getLegislators('TX')
+    this.getincidents('TX')
   },
   data () {
     return {
-      legislators: 'default legistators',
+      incidents: ['placeholder for police incidents in austin'],
       trenddata: [0, 9, 1, 10, 10, 10, 1, 1, 0, 0, 9, 8, 7, 8, 9],
       todos: [{
         title: 'Todo A',
@@ -74,6 +89,10 @@ export default {
         name: 'Training',
         price: 220,
         active: false
+      }],
+      center: {lat: 30.2672, lng: -97.7431},
+      markers: [{
+        position: {lat: 30.301911, lng: -97.777739}
       }]
     }
   },
@@ -83,13 +102,17 @@ export default {
         newTodo
       )
     },
-    getLegislators (state) {
-      this.$http.get('https://jsonplaceholder.typicode.com/users').then(response => {
-        // alert(response.data)
-        this.legislators = response.data[1].name
+    getincidents (state) {
+      this.$http.get('https://data.policefoundation.org/resource/iibt-hvrs.json').then(response => {
+        var returnedincidents = response.data
+        var i
+        for (i = 0; i < 10; i++) {
+          this.incidents.push(returnedincidents[i].address)
+        }
+        // this.incidents = response.data[1].address
       }, response => {
         // error callback
-        alert('error')
+        alert('Error: ' + response)
       })
     }
   }
