@@ -18,7 +18,7 @@
         Total: <span>{{total() | currency }}</span>
     </div>
   </form>
-  <alert bold="Greetings." msg="This is some information." type="alert-info"></alert>
+  
   </div>
 </template>
 

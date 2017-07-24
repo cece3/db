@@ -3,6 +3,7 @@
     <todo-list v-bind:todos="todos"></todo-list>
     <create-todo v-on:create-todo="createTodo"></create-todo>
     <order-form v-bind:services="services"></order-form>
+    <alert bold="Greetings." msg="This is some information." type="alert-info"></alert>
   </div>
 </template>
 

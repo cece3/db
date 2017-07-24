@@ -13,7 +13,7 @@ Vue.filter('currency', function (value) {
 
 Vue.component('alert', {
   props: ['type', 'bold', 'msg'],
-  template: '<div class="alert {{ type }}" role="alert"><b>{{ bold }}</b> {{ msg }}</div>'
+  template: '<div class="alert" v-bind:class=type role="alert"><b>{{ bold }}</b> {{ msg }}</div>'
 })
 
 new Vue({
