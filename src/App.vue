@@ -1,16 +1,20 @@
 <template>
   <div id="app">
+    <alert bold="TODO List: " msg="Unformatted todo list.  Copied (needed tweaking) from online tutorial" type="alert-info"></alert>
     <todo-list v-bind:todos="todos"></todo-list>
     <create-todo v-on:create-todo="createTodo"></create-todo>
+    <alert bold="Order form: " msg="Example of using a filter" type="alert-info"></alert>
     <order-form v-bind:services="services"></order-form>
-    <alert bold="Greetings." msg="This is some information." type="alert-info"></alert>
+    <alert bold="Trend data: " msg="Example of using VueTrend and Chartkick" type="alert-info"></alert>
     <trend
     :data="trenddata"
     :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
     auto-draw
     smooth>
   </trend>
+  <alert bold="Vertical Chart: " msg="Example of another chart type.  Static data for now." type="alert-info"></alert>
   <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
+  <alert bold="HTTP Get: " msg="Example of getting data via http on page load (mounted) and dynamically replacing data" type="alert-info"></alert>
   <span>{{ legislators }}</span>
   </div>
 </template>
