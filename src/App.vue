@@ -4,6 +4,14 @@
     <create-todo v-on:create-todo="createTodo"></create-todo>
     <order-form v-bind:services="services"></order-form>
     <alert bold="Greetings." msg="This is some information." type="alert-info"></alert>
+    <trend
+    :data="trenddata"
+    :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
+    auto-draw
+    smooth>
+  </trend>
+  <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
+  <span>{{ legislators }}</span>
   </div>
 </template>
 
@@ -19,8 +27,13 @@ export default {
     CreateTodo,
     OrderForm
   },
+  mounted: function () {
+    this.getLegislators('TX')
+  },
   data () {
     return {
+      legislators: 'default legistators',
+      trenddata: [0, 9, 1, 10, 10, 10, 1, 1, 0, 0, 9, 8, 7, 8, 9],
       todos: [{
         title: 'Todo A',
         project: 'Project A',
@@ -65,6 +78,15 @@ export default {
       this.todos.push(
         newTodo
       )
+    },
+    getLegislators (state) {
+      this.$http.get('https://jsonplaceholder.typicode.com/users').then(response => {
+        // alert(response.data)
+        this.legislators = response.data[1].name
+      }, response => {
+        // error callback
+        alert('error')
+      })
     }
   }
 }
