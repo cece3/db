@@ -106,14 +106,37 @@ export default {
       this.$http.get('https://data.policefoundation.org/resource/iibt-hvrs.json').then(response => {
         var returnedincidents = response.data
         var i
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 1; i++) {
           this.incidents.push(returnedincidents[i].address)
+          // geocode the address
+          this.geocode(returnedincidents[i].address + ', Austin, TX')
         }
         // this.incidents = response.data[1].address
       }, response => {
         // error callback
-        alert('Error: ' + response)
+        alert('getincidents Error: ' + response)
       })
+    },
+    geocode (address) {
+      let query
+      query = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=AIzaSyCRszFuoL7Wk2wZrbYuWPn2ESgIX_PCQ3s`
+      fetch(`${query}`)
+          .then(response => {
+            if (response.status !== 200) {
+              return
+            }
+            response.json().then(data => {
+              // if (!data.length) {
+                // alert('error with data length' + data.results)
+                // return
+              // }
+              console.dir(data.results[0].geometry.location.lat)
+            })
+          })
+          .catch(() => {
+            alert('caught error')
+          })
+      return 0
     }
   }
 }
