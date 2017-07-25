@@ -16,7 +16,7 @@
   <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
   <alert bold="HTTP Get: " msg="Example of getting data via http on page load (mounted) and dynamically replacing data" type="alert-info"></alert>
   <span>{{ incidents }}</span>
-  <alert bold="Google maps: " msg="Example google maps (hardcoded data)" type="alert-info"></alert>
+  <alert bold="Google maps: " msg="Example google maps (data from APD incidents api)" type="alert-info"></alert>
   <gmap-map
     :center="center"
     :zoom="10"
@@ -106,7 +106,7 @@ export default {
       this.$http.get('https://data.policefoundation.org/resource/iibt-hvrs.json').then(response => {
         var returnedincidents = response.data
         var i
-        for (i = 0; i < 1; i++) {
+        for (i = 0; i < 8; i++) {
           this.incidents.push(returnedincidents[i].address)
           // geocode the address
           this.geocode(returnedincidents[i].address + ', Austin, TX')
@@ -126,10 +126,9 @@ export default {
               return
             }
             response.json().then(data => {
-              // if (!data.length) {
-                // alert('error with data length' + data.results)
-                // return
-              // }
+              let lat = data.results[0].geometry.location.lat
+              let lng = data.results[0].geometry.location.lng
+              this.markers.push({position: {lat, lng}})
               console.dir(data.results[0].geometry.location.lat)
             })
           })
